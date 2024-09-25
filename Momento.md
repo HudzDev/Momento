@@ -191,3 +191,46 @@ escritorio: ObjectId ("66f34452b4ce25097d7800ce") })</pre>
 { mediaSalarios: -1 }},
 { $limit: 1 }
 ])</pre>
+
+## Qual o departamento com o menor número de funcionários?
+
+<pre>R: com o total de 0 funcionários, os departamentos de Marketing, Financeiro e Dados, possuem o menor número de funcionários</pre>
+
+<pre>db.funcionarios.countDocuments({departamento: ObjectId("85992103f9b3e0b3b3c1fe72") })</pre>
+
+<pre>db.funcionarios.countDocuments({departamento: ObjectId("85992103f9b3e0b3b3c1fe73") })</pre>
+
+<pre>db.funcionarios.countDocuments({departamento: ObjectId("85992103f9b3e0b3b3c1fe76") })</pre>
+
+## Pensando na relação quantidade e valor unitario, qual o produto mais valioso da empresa?
+
+<pre>R: o produto mais valioso é o Uniforme do Superman custando R$300</pre>
+
+<pre>db.vendas.aggregate([
+{ $sort: { valor: -1 } },
+{ $limit: 1 }
+])</pre>
+ 
+## Qual o produto mais vendido da empresa?
+
+<pre>R: Laço da Verdade sendo vendido 12 vezes</pre>
+
+<pre>db.vendas.aggregate([
+{ $group: 
+{ _id: "$produto", 
+  totalQuantidadesVendidas: { $sum: "$quantidade" }} },
+{ $sort: { totalQuantidadesVendidas: -1 }},
+{ $limit: 1 }
+])</pre>
+ 
+## Qual o produto menos vendido da empresa?
+
+<pre>R: Uniforme do Superman com 2 vendas</pre>
+
+<pre>db.vendas.aggregate([
+{ $group: 
+{ _id: "$produto", 
+  totalQuantidadesVendidas: { $sum: "$quantidade" }} },
+{ $sort: { totalQuantidadesVendidas: +1 }},
+{ $limit: 1 }
+])</pre>
