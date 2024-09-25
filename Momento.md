@@ -16,7 +16,7 @@ db.funcionarios.countDocuments({departamento: ObjectId("85992103f9b3e0b3b3c1fe71
   email: 'hudsonsouza@proa', \
   dataAdmissao: '2024-09-24', \
   cargo: 'Web Developer', \
-  salario: 15500, \
+  salario: 20000, \
   departamento: ObjectId('85992103f9b3e0b3b3c1fe74') })</pre>
  
 ## Agora diga, quantos funcionários temos ao total na empresa?
@@ -33,15 +33,21 @@ db.funcionarios.countDocuments({departamento: ObjectId("85992103f9b3e0b3b3c1fe74
  
 ## Qual a média salarial do departamento de tecnologia?
  
-<pre>R: 12736.
+<pre>R: 7133.
  
 db.funcionarios.aggregate([ \
-{$group: {_id: null, \
-totalSalarios: {$sum: "$salario"}, \
-totalFuncionarios: {$sum: 1} } }, \
-{$project: {_id: 0, \
-totalSalarios: 1, \
-mediaSalarios: {$divide: ["$totalSalarios", "$totalFuncionarios"] }} }])</pre>
+{ $match: {departamento: ObjectId("85992103f9b3e0b3b3c1fe74")} }, \
+{ $group: \
+{ _id: null, \
+  totalSalarios: {$sum: "$salario"}, \
+  totalFuncionarios: {$sum: 1}} \
+}, \
+{ $project: \
+{ _id: 0, \
+  totalSalarios: 1, \
+  mediaSalarios: { $divide: ["$totalSalarios", "$totalFuncionarios"] }} \
+} \
+])</pre>
  
 ## Quanto o departamento de Vendas gasta em salários?
  
