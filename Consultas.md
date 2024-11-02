@@ -1,7 +1,3 @@
-# Momento
- 
-<pre>Vamos fazer algumas perguntas para brincar de análise exploratória de dados com MongoDB.</pre>
- 
 ## Quantos funcionarios da empresa Momento trabalham no departamento de vendas?
  
 <pre>R: 10</pre>
